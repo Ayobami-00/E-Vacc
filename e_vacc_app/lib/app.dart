@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'features/onboarding/index.dart';
+
 class App extends StatefulWidget {
   const App({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class _AppState extends State<App> {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Container(),
+      home: OnboardingPage(),
     );
   }
 }
