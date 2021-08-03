@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:e_vacc_app/core/navigation/index.dart';
 import 'package:e_vacc_app/features/onboarding/index.dart';
 import 'package:e_vacc_app/utils/index.dart';
 import 'package:flutter/material.dart' hide Router;
@@ -15,12 +16,13 @@ class OnboardingPage extends StatefulWidget {
 
 class _OnboardingPageState extends State<OnboardingPage> {
   List<OnboardingSlider> slides = <OnboardingSlider>[];
+  late Timer _pageViewAutoAnimateTimer;
 
   @override
   void initState() {
     super.initState();
     slides = getSlides();
-    Timer.periodic(
+    _pageViewAutoAnimateTimer = Timer.periodic(
       const Duration(seconds: 5),
       (timer) {
         if (currentIndex != slides.length - 1) {
@@ -32,6 +34,12 @@ class _OnboardingPageState extends State<OnboardingPage> {
         }
       },
     );
+  }
+
+  @override
+  void dispose() {
+    _pageViewAutoAnimateTimer.cancel();
+    super.dispose();
   }
 
   Widget pageIndexIndicator({required bool isCurrentPage}) {
@@ -49,7 +57,6 @@ class _OnboardingPageState extends State<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: Colors.white,
       body: SafeArea(
         child: Column(
           children: [
@@ -59,11 +66,8 @@ class _OnboardingPageState extends State<OnboardingPage> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
-                    key: const Key("SKIP BUTTON"),
                     onTap: () {
-                      pageController.animateToPage(4,
-                          duration: const Duration(milliseconds: 400),
-                          curve: Curves.linear);
+                      Navigator.pushReplacementNamed(context, signInRoute);
                     },
                     child: Visibility(
                       visible: currentIndex != 3,

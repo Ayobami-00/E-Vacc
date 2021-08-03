@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'core/navigation/index.dart';
 import 'features/onboarding/index.dart';
 
 class App extends StatefulWidget {
@@ -19,6 +20,7 @@ class _AppState extends State<App> {
         primarySwatch: Colors.blue,
       ),
       home: OnboardingPage(),
+      onGenerateRoute: generateRoute,
     );
   }
 }
